@@ -1,6 +1,3 @@
-<?php
-require_once 'backend/db_query.php';
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,15 +19,13 @@ require_once 'backend/db_query.php';
             <form>
                 <div class="form-group">
                     <label for="this_rucar_mark">Выберите марку</label>
-                    <select class="form-control" name="mark"
-                            id="this_rucar_mark">
-                      <?php
-                      foreach ($marks as $mark): ?>
-                          <option data-id-car-mark="<?= $mark['id_car_mark'] ?>" value="<?= $mark['name'] ?>">
-                            <?= $mark['name_rus'] ?>
-                          </option>
-                      <?php endforeach; ?>
-                    </select>
+                    <select class="form-control" name="this_rucar_mark"
+                            id="this_rucar_mark"></select>
+                </div>
+                <div class="form-group">
+                    <label for="this_rucar_model">Выберите модель</label>
+                    <select disabled class="form-control" name="this_rucar_model"
+                            id="this_rucar_model"></select>
                 </div>
             </form>
         </div>
@@ -40,7 +35,8 @@ require_once 'backend/db_query.php';
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="js/jquery-3.5.1.js"></script>
-<script src="js/popper-1.16.0.js"></script>
+<!--<script src="js/popper-1.16.0.js"></script>-->
 <script src="js/bootstrap-4.5.0.js"></script>
+<script src="frontend/script.js"></script>
 </body>
 </html>
