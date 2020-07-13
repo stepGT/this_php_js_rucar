@@ -29,6 +29,11 @@
                     <select disabled class="form-control" name="this_rucar_model"
                             id="this_rucar_model"></select>
                 </div>
+                <div class="form-group">
+                    <label for="this_rucar_generation">Поколение</label>
+                    <select disabled class="form-control" name="this_rucar_generation"
+                            id="this_rucar_generation"></select>
+                </div>
             </form>
         </div>
     </div>
