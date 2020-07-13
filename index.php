@@ -18,12 +18,14 @@
         <div class="col">
             <form>
                 <div class="form-group">
-                    <label for="this_rucar_mark">Выберите марку</label>
+                    <label for="this_rucar_mark">Марка</label>
                     <select class="form-control" name="this_rucar_mark"
-                            id="this_rucar_mark"></select>
+                            id="this_rucar_mark">
+                        <option value="0">Выберите марку</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="this_rucar_model">Выберите модель</label>
+                    <label for="this_rucar_model">Модель</label>
                     <select disabled class="form-control" name="this_rucar_model"
                             id="this_rucar_model"></select>
                 </div>
