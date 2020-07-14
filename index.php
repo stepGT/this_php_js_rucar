@@ -34,6 +34,11 @@
                     <select disabled class="form-control" name="this_rucar_generation"
                             id="this_rucar_generation"></select>
                 </div>
+                <div class="form-group">
+                    <label for="this_rucar_serie">Серия</label>
+                    <select disabled class="form-control" name="this_rucar_serie"
+                            id="this_rucar_serie"></select>
+                </div>
             </form>
         </div>
     </div>
