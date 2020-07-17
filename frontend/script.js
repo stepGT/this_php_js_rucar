@@ -4,6 +4,7 @@ $(document).ready(function () {
   let rucar_model      = $('#this_rucar_model');
   let rucar_generation = $('#this_rucar_generation');
   let rucar_serie      = $('#this_rucar_serie');
+  let rucar_modification = $('#this_rucar_modification');
   //
   const _get_entities = (entity, selector, value = '', prev_ent = '') => {
     //
@@ -44,5 +45,10 @@ $(document).ready(function () {
   // Get serie
   rucar_generation.change(function () {
     _get_entities('serie', rucar_serie, $(this).val(), 'generation');
+  });
+
+  // Get modification
+  rucar_serie.change(function () {
+    _get_entities('modification', rucar_modification, $(this).val(), 'serie');
   });
 });
