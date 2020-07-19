@@ -21,7 +21,6 @@
                     <label for="this_rucar_mark">Марка</label>
                     <select class="form-control" name="this_rucar_mark"
                             id="this_rucar_mark">
-                        <option value="0">Выберите марку</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -43,6 +42,11 @@
                     <label for="this_rucar_modification">Модификация</label>
                     <select disabled class="form-control" name="this_rucar_modification"
                             id="this_rucar_modification"></select>
+                </div>
+                <div class="form-group">
+                    <label for="this_rucar_equipment">Комплектация</label>
+                    <select disabled class="form-control" name="this_rucar_equipment"
+                            id="this_rucar_equipment"></select>
                 </div>
             </form>
         </div>

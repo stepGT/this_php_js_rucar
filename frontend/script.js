@@ -5,8 +5,18 @@ $(document).ready(function () {
   let rucar_generation = $('#this_rucar_generation');
   let rucar_serie      = $('#this_rucar_serie');
   let rucar_modification = $('#this_rucar_modification');
+  let rucar_equipment    = $('#this_rucar_equipment');
   //
   const _get_entities = (entity, selector, value = '', prev_ent = '') => {
+    //
+    let entity_name = {
+      mark: 'марку',
+      model: 'модель',
+      generation: 'поколение',
+      serie: 'серию',
+      modification: 'модификацию',
+      equipment: 'комплектацию'
+    };
     //
     if (entity !== 'mark') {
       selector.children().remove();
@@ -19,12 +29,22 @@ $(document).ready(function () {
       value: value
     }).done(function (response) {
       let jsonData = JSON.parse(response);
-      let html = '';
+      let html = '<option value="0">Выберите ' + entity_name[entity] + '</option>';
       //
-      $.each(jsonData, function (key, value) {
-        let _entity_id = 'id_car_' + entity;
-        html += '<option value="' + value[_entity_id] + '">' + value.name + '</option>';
-      });
+      switch (entity) {
+        case 'generation':
+          $.each(jsonData, function (key, value) {
+            let _entity_id = 'id_car_' + entity;
+            html += '<option value="' + value[_entity_id] + '">' + value.name + '[' + value.year_begin + ' - ' + value.year_end + ']</option>';
+          });
+          break;
+        default:
+          $.each(jsonData, function (key, value) {
+            let _entity_id = 'id_car_' + entity;
+            html += '<option value="' + value[_entity_id] + '">' + value.name + '</option>';
+          });
+          break;
+      }
       selector.attr('disabled', false).append(html);
     });
   };
@@ -50,5 +70,10 @@ $(document).ready(function () {
   // Get modification
   rucar_serie.change(function () {
     _get_entities('modification', rucar_modification, $(this).val(), 'serie');
+  });
+
+  // Get equipment
+  rucar_modification.change(function () {
+    _get_entities('equipment', rucar_equipment, $(this).val(), 'modification');
   });
 });
