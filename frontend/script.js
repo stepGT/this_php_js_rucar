@@ -4,9 +4,9 @@ $(document).ready(function () {
   let rucar_model      = $('#this_rucar_model');
   let rucar_generation = $('#this_rucar_generation');
   let rucar_serie      = $('#this_rucar_serie');
-  let rucar_modification = $('#this_rucar_modification');
-  let rucar_equipment    = $('#this_rucar_equipment');
-  let rucar_characteristic    = $('#rucar_characteristic');
+  let rucar_modification   = $('#this_rucar_modification');
+  let rucar_equipment      = $('#this_rucar_equipment');
+  let rucar_characteristic = $('#rucar_characteristic');
   //
   const _get_entities = (entity, selector, value = '', prev_ent = '') => {
     //
@@ -55,11 +55,13 @@ $(document).ready(function () {
       value: value
     }).done(function (response) {
       let jsonData = JSON.parse(response);
+      let html = '';
       $('#rucar_characteristic').html('');
       //
       $.each(jsonData, function (key, value) {
-        selector.append(value + '<br>');
+        html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + value.unit + '</p>';
       });
+      selector.append(html);
     });
   };
 
