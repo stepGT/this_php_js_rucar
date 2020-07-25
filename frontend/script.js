@@ -7,8 +7,16 @@ $(document).ready(function () {
   let rucar_modification   = $('#this_rucar_modification');
   let rucar_equipment      = $('#this_rucar_equipment');
   let rucar_characteristic = $('#rucar_characteristic');
-  let rucar_options        = $('#rucar_options');
-
+  let rucar_options        = $('#rucar_option');
+  // Constants
+  const ENTITY_MARK           = 'mark';
+  const ENTITY_MODEL          = 'model';
+  const ENTITY_GENERATION     = 'generation';
+  const ENTITY_SERIE          = 'serie';
+  const ENTITY_MODIFICATION   = 'modification';
+  const ENTITY_EQUIPMENT      = 'equipment';
+  const ENTITY_CHARACTERISTIC = 'characteristic';
+  const ENTITY_OPTION         = 'option';
   /**
    *
    * @param entity
@@ -20,15 +28,15 @@ $(document).ready(function () {
   const _get_entities = (entity, selector, value = '', prev_ent = '') => {
     //
     let entity_name = {
-      mark: 'марку',
-      model: 'модель',
-      generation: 'поколение',
-      serie: 'серию',
-      modification: 'модификацию',
-      equipment: 'комплектацию'
+      [ENTITY_MARK]: 'марку',
+      [ENTITY_MODEL]: 'модель',
+      [ENTITY_GENERATION]: 'поколение',
+      [ENTITY_SERIE]: 'серию',
+      [ENTITY_MODIFICATION]: 'модификацию',
+      [ENTITY_EQUIPMENT]: 'комплектацию'
     };
     //
-    if (entity !== 'mark') {
+    if (entity !== ENTITY_MARK) {
       selector.children().remove();
       selector.attr('disabled', true);
     }
@@ -42,7 +50,7 @@ $(document).ready(function () {
       let html = '<option value="0">Выберите ' + entity_name[entity] + '</option>';
       //
       switch (entity) {
-        case 'generation':
+        case ENTITY_GENERATION:
           $.each(jsonData, function (key, value) {
             let _entity_id = 'id_car_' + entity;
             html += '<option value="' + value[_entity_id] + '">' + value.name + '[' + value.year_begin + ' - ' + value.year_end + ']</option>';
@@ -61,77 +69,66 @@ $(document).ready(function () {
 
   /**
    *
+   * @param entity
    * @param selector
    * @param value
    * @private
    */
-  const _get_characteristic = (selector, value) => {
-    $.post('/backend/_get_characteristic.php', {
+  const _get_char_opt = (entity, selector, value) => {
+    $.post('/backend/_get_' + entity + '.php', {
       value: value
     }).done(function (response) {
       let jsonData = JSON.parse(response);
       let html = '';
-      $('#rucar_characteristic').html('');
+      $('#rucar_' + entity).html('');
       //
-      $.each(jsonData, function (key, value) {
-        html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + value.unit + '</p>';
-      });
-      selector.append(html);
-    });
-  };
-
-  /**
-   *
-   * @param selector
-   * @param value
-   * @private
-   */
-  const _get_option = (selector, value) => {
-    $.post('/backend/_get_option.php', {
-      value: value
-    }).done(function (response) {
-      let jsonData = JSON.parse(response);
-      let html = '';
-      $('#rucar_options').html('');
-      //
-      $.each(jsonData, function (key, value) {
-        html += '<p><b>' + value.name + '</b></p>';
-      });
+      switch(entity) {
+        case ENTITY_CHARACTERISTIC:
+          $.each(jsonData, function (key, value) {
+            html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + value.unit + '</p>';
+          });
+          break;
+        case ENTITY_OPTION:
+          $.each(jsonData, function (key, value) {
+            html += '<p>' + value.name + '</p>';
+          });
+          break;
+      }
       selector.append(html);
     });
   };
 
   // Get all mark
-  _get_entities('mark', rucar_mark);
+  _get_entities(ENTITY_MARK, rucar_mark);
 
   // Get models
   rucar_mark.change(function () {
-    _get_entities('model', rucar_model, $(this).val(), 'mark');
+    _get_entities(ENTITY_MODEL, rucar_model, $(this).val(), ENTITY_MARK);
   });
 
   // Get generation
   rucar_model.change(function () {
-    _get_entities('generation', rucar_generation, $(this).val(), 'model');
+    _get_entities(ENTITY_GENERATION, rucar_generation, $(this).val(), ENTITY_MODEL);
   });
 
   // Get serie
   rucar_generation.change(function () {
-    _get_entities('serie', rucar_serie, $(this).val(), 'generation');
+    _get_entities(ENTITY_SERIE, rucar_serie, $(this).val(), ENTITY_GENERATION);
   });
 
   // Get modification
   rucar_serie.change(function () {
-    _get_entities('modification', rucar_modification, $(this).val(), 'serie');
+    _get_entities(ENTITY_MODIFICATION, rucar_modification, $(this).val(), ENTITY_SERIE);
   });
 
   // Get equipment
   rucar_modification.change(function () {
-    _get_entities('equipment', rucar_equipment, $(this).val(), 'modification');
-    _get_characteristic(rucar_characteristic, $(this).val());
+    _get_entities(ENTITY_EQUIPMENT, rucar_equipment, $(this).val(), ENTITY_MODIFICATION);
+    _get_char_opt(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
   });
 
   // Get option
   rucar_equipment.change(function () {
-    _get_option(rucar_options, $(this).val());
+    _get_char_opt(ENTITY_OPTION, rucar_options, $(this).val());
   });
 });

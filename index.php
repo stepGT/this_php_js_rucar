@@ -52,7 +52,7 @@
             <h3>Значения характеристик:</h3>
             <div id="rucar_characteristic"></div>
             <h3>Опции:</h3>
-            <div id="rucar_options"></div>
+            <div id="rucar_option"></div>
         </div>
     </div>
 </div>
