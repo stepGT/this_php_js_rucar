@@ -7,7 +7,7 @@ $(document).ready(function () {
   let rucar_modification   = $('#this_rucar_modification');
   let rucar_equipment      = $('#this_rucar_equipment');
   let rucar_characteristic = $('#rucar_characteristic');
-  let rucar_options        = $('#rucar_option');
+  let rucar_option         = $('#rucar_option');
   // Constants
   const ENTITY_MARK           = 'mark';
   const ENTITY_MODEL          = 'model';
@@ -129,6 +129,6 @@ $(document).ready(function () {
 
   // Get option
   rucar_equipment.change(function () {
-    _get_char_opt(ENTITY_OPTION, rucar_options, $(this).val());
+    _get_char_opt(ENTITY_OPTION, rucar_option, $(this).val());
   });
 });
