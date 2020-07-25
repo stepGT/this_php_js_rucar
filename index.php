@@ -49,6 +49,8 @@
                             id="this_rucar_equipment"></select>
                 </div>
             </form>
+            <h3>Значения характеристик:</h3>
+            <div id="rucar_characteristic"></div>
         </div>
     </div>
 </div>
