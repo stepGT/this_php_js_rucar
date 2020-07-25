@@ -7,7 +7,16 @@ $(document).ready(function () {
   let rucar_modification   = $('#this_rucar_modification');
   let rucar_equipment      = $('#this_rucar_equipment');
   let rucar_characteristic = $('#rucar_characteristic');
-  //
+  let rucar_options        = $('#rucar_options');
+
+  /**
+   *
+   * @param entity
+   * @param selector
+   * @param value
+   * @param prev_ent
+   * @private
+   */
   const _get_entities = (entity, selector, value = '', prev_ent = '') => {
     //
     let entity_name = {
@@ -49,7 +58,13 @@ $(document).ready(function () {
       selector.attr('disabled', false).append(html);
     });
   };
-  //
+
+  /**
+   *
+   * @param selector
+   * @param value
+   * @private
+   */
   const _get_characteristic = (selector, value) => {
     $.post('/backend/_get_characteristic.php', {
       value: value
@@ -60,6 +75,27 @@ $(document).ready(function () {
       //
       $.each(jsonData, function (key, value) {
         html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + value.unit + '</p>';
+      });
+      selector.append(html);
+    });
+  };
+
+  /**
+   *
+   * @param selector
+   * @param value
+   * @private
+   */
+  const _get_option = (selector, value) => {
+    $.post('/backend/_get_option.php', {
+      value: value
+    }).done(function (response) {
+      let jsonData = JSON.parse(response);
+      let html = '';
+      $('#rucar_options').html('');
+      //
+      $.each(jsonData, function (key, value) {
+        html += '<p><b>' + value.name + '</b></p>';
       });
       selector.append(html);
     });
@@ -92,5 +128,10 @@ $(document).ready(function () {
   rucar_modification.change(function () {
     _get_entities('equipment', rucar_equipment, $(this).val(), 'modification');
     _get_characteristic(rucar_characteristic, $(this).val());
+  });
+
+  // Get option
+  rucar_equipment.change(function () {
+    _get_option(rucar_options, $(this).val());
   });
 });
