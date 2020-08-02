@@ -1,37 +1,33 @@
 <?php
-require_once 'db_const.php';
 require_once 'db_conn.php';
 //
-$entity = 'car_mark';
-$entities = [];
+$entity = $_POST['entity'];
+$value  = $_POST['value'];
 //
 switch ($entity) {
-  case 'car_mark':
-    $STH = $DBH->prepare("SELECT * FROM car_mark");
-    $STH->execute([$entity]);
-    $row = $STH->fetch();
-    print '<pre>';
-    print_r($row);
-    print '</pre>';
-    exit;
+  case 'mark':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_mark` FROM `car_mark`");
+    $stmt->execute();
     break;
-  /*case 'generation':
-    $query = mysqli_query($conn, 'SELECT * FROM ' . DB_NAME . '.`car_' . $entity . '` WHERE `id_car_' . $prev_ent . '` = ' . $value . ' AND `year_begin` IS NOT NULL AND `year_end` IS NOT NULL');
+  case 'model':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_model` FROM `car_model` WHERE `id_car_mark` = :val");
+    $stmt->execute(['val' => $value]);
     break;
-  default:
-    $query = mysqli_query($conn, 'SELECT * FROM ' . DB_NAME . '.`car_' . $entity . '` WHERE `id_car_' . $prev_ent . '` = ' . $value);*/
+  case 'generation':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_generation`, `year_begin`, `year_end` FROM `car_generation` WHERE `id_car_model` = :val AND `year_begin` IS NOT NULL AND `year_end` IS NOT NULL");
+    $stmt->execute(['val' => $value]);
+    break;
+  case 'serie':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_serie` FROM `car_serie` WHERE `id_car_generation` = :val");
+    $stmt->execute(['val' => $value]);
+    break;
+  case 'modification':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_modification` FROM `car_modification` WHERE `id_car_serie` = :val");
+    $stmt->execute(['val' => $value]);
+    break;
+  default;
 }
-//
-/*while ($row = $STH->fetchAll()) {
-  $entities[$row['id_car_' . $entity]]['name'] = $row['name'];
-  $entities[$row['id_car_' . $entity]]['id_car_' . $entity] = $row['id_car_' . $entity . ''];
-  //
-  if ($entity === 'generation') {
-    $entities[$row['id_car_' . $entity]]['year_begin'] = $row['year_begin'];
-    $entities[$row['id_car_' . $entity]]['year_end'] = $row['year_end'];
-  }
-}*/
 // Close connect
-$DBH = NULL;
+$dbh = NULL;
 // Send a JSON encoded object to client
-echo json_encode($entities);
+echo json_encode($stmt->fetchAll());
