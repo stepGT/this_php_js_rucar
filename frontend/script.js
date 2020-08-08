@@ -47,9 +47,15 @@ $(document).ready(function () {
       value: value
     }).done(function (response) {
       let jsonData = JSON.parse(response);
-      let html = '<option value="0">Выберите ' + entity_name[entity] + '</option>';
+      let html = entity !== ENTITY_CHARACTERISTIC ? '<option value="0">Выберите ' + entity_name[entity] + '</option>' : '';
       //
       switch (entity) {
+        case ENTITY_CHARACTERISTIC:
+          $.each(jsonData, function (key, value) {
+            let unit = value.unit ? value.unit : '';
+            html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + unit + '</p>';
+          });
+          break;
         case ENTITY_GENERATION:
           $.each(jsonData, function (key, value) {
             let _entity_id = 'id_car_' + entity;
@@ -124,7 +130,7 @@ $(document).ready(function () {
   // Get equipment
   rucar_modification.change(function () {
     _get_entities(ENTITY_EQUIPMENT, rucar_equipment, $(this).val());
-    //_get_char_opt(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
+    _get_entities(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
   });
 
   // Get option
