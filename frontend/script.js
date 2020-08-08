@@ -22,10 +22,9 @@ $(document).ready(function () {
    * @param entity
    * @param selector
    * @param value
-   * @param prev_ent
    * @private
    */
-  const _get_entities = (entity, selector, value = '', prev_ent = '') => {
+  const _get_entities = (entity, selector, value = '') => {
     //
     let entity_name = {
       [ENTITY_MARK]: 'марку',
@@ -42,7 +41,6 @@ $(document).ready(function () {
     }
     //
     $.post('/backend/_get_query.php', {
-      prev_ent: prev_ent,
       entity: entity,
       value: value
     }).done(function (response) {
@@ -70,37 +68,6 @@ $(document).ready(function () {
           break;
       }
       selector.attr('disabled', false).append(html);
-    });
-  };
-
-  /**
-   *
-   * @param entity
-   * @param selector
-   * @param value
-   * @private
-   */
-  const _get_char_opt = (entity, selector, value) => {
-    $.post('/backend/_get_' + entity + '.php', {
-      value: value
-    }).done(function (response) {
-      let jsonData = JSON.parse(response);
-      let html = '';
-      $('#rucar_' + entity).html('');
-      //
-      switch(entity) {
-        case ENTITY_CHARACTERISTIC:
-          $.each(jsonData, function (key, value) {
-            html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + value.unit + '</p>';
-          });
-          break;
-        case ENTITY_OPTION:
-          $.each(jsonData, function (key, value) {
-            html += '<p>' + value.name + '</p>';
-          });
-          break;
-      }
-      selector.append(html);
     });
   };
 
@@ -135,6 +102,6 @@ $(document).ready(function () {
 
   // Get option
   rucar_equipment.change(function () {
-    _get_char_opt(ENTITY_OPTION, rucar_option, $(this).val());
+    //_get_char_opt(ENTITY_OPTION, rucar_option, $(this).val());
   });
 });
