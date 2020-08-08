@@ -35,6 +35,12 @@ switch ($entity) {
     WHERE `id_car_modification` = :val ORDER BY `name`');
     $stmt->execute(['val' => $value]);
     break;
+  case 'option':
+    $stmt = $dbh->prepare('SELECT `name`, `co`.`id_car_option` FROM `car_option_value` AS `cov` 
+    LEFT JOIN `car_option` AS `co` ON `cov`.`id_car_option` = `co`.`id_car_option` 
+    WHERE `id_car_equipment` = :val  ORDER BY `name`');
+    $stmt->execute(['val' => $value]);
+    break;
   default;
 }
 // Close connect

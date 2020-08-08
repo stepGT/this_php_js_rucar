@@ -45,7 +45,7 @@ $(document).ready(function () {
       value: value
     }).done(function (response) {
       let jsonData = JSON.parse(response);
-      let html = entity !== ENTITY_CHARACTERISTIC ? '<option value="0">Выберите ' + entity_name[entity] + '</option>' : '';
+      let html = (entity !== ENTITY_CHARACTERISTIC && entity !== ENTITY_OPTION) ? '<option value="0">Выберите ' + entity_name[entity] + '</option>' : '';
       //
       switch (entity) {
         case ENTITY_CHARACTERISTIC:
@@ -102,6 +102,6 @@ $(document).ready(function () {
 
   // Get option
   rucar_equipment.change(function () {
-    //_get_char_opt(ENTITY_OPTION, rucar_option, $(this).val());
+    _get_entities(ENTITY_OPTION, rucar_option, $(this).val());
   });
 });
