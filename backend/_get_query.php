@@ -25,9 +25,13 @@ switch ($entity) {
     $stmt = $dbh->prepare("SELECT `name`, `id_car_modification` FROM `car_modification` WHERE `id_car_serie` = :val");
     $stmt->execute(['val' => $value]);
     break;
+  case 'equipment':
+    $stmt = $dbh->prepare("SELECT `name`, `id_car_equipment` FROM `car_equipment` WHERE `id_car_modification` = :val");
+    $stmt->execute(['val' => $value]);
+    break;
   default;
 }
 // Close connect
 $dbh = NULL;
 // Send a JSON encoded object to client
-echo json_encode($stmt->fetchAll());
+echo json_encode($stmt ? $stmt->fetchAll() : new PDOStatement());

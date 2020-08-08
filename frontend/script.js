@@ -123,8 +123,8 @@ $(document).ready(function () {
 
   // Get equipment
   rucar_modification.change(function () {
-    _get_entities(ENTITY_EQUIPMENT, rucar_equipment, $(this).val(), ENTITY_MODIFICATION);
-    _get_char_opt(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
+    _get_entities(ENTITY_EQUIPMENT, rucar_equipment, $(this).val());
+    //_get_char_opt(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
   });
 
   // Get option
