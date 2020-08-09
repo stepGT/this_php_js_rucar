@@ -58,7 +58,7 @@ $(document).ready(function () {
       [ENTITY_EQUIPMENT]: 'комплектацию'
     };
     //
-    $.post('/backend/_get_query.php', {
+    $.post('/backend/_get_entities.php', {
       entity: entity,
       value: value
     }).done(function (response) {
