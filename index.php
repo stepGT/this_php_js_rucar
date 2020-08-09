@@ -53,11 +53,11 @@
         <div class="col-9">
             <div class="row">
                 <div class="col-6">
-                    <h4>Значения характеристик:</h4>
+                    <h5>Значения характеристик:</h5>
                     <div class="rucar_characteristic"></div>
                 </div>
                 <div class="col-6">
-                    <h4>Опции:</h4>
+                    <h5>Опции:</h5>
                     <div class="rucar_option"></div>
                 </div>
             </div>

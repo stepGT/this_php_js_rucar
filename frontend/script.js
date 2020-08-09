@@ -34,6 +34,12 @@ $(document).ready(function () {
     });
   };
 
+  let _entity_clear_char_opt = function (...selector) {
+    $.each(selector, function (i, el) {
+      $('.rucar_' + el).empty();
+    });
+  };
+
   /**
    *
    * @param entity
@@ -61,7 +67,7 @@ $(document).ready(function () {
       //
       switch (entity) {
         case ENTITY_CHARACTERISTIC:
-          $(selector).html('');
+          $(selector).empty();
           $.each(jsonData, function (key, value) {
             let unit = value.unit ? value.unit : '';
             html += '<p><small><b>' + value.name + '</b>: ' + value.value + ' ' + unit + '</small></p>';
@@ -69,7 +75,7 @@ $(document).ready(function () {
           selector.append(html);
           break;
         case ENTITY_OPTION:
-          $(selector).html('');
+          $(selector).empty();
           $.each(jsonData, function (key, value) {
             html += '<p><small>' + value.name + '</small></p>';
           });
@@ -98,24 +104,28 @@ $(document).ready(function () {
 
   // Get models
   rucar_mark.change(function () {
+    _entity_clear_char_opt(ENTITY_CHARACTERISTIC, ENTITY_OPTION);
     _entity_clear(ENTITY_MODEL, ENTITY_GENERATION, ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_MODEL, rucar_model, $(this).val(), ENTITY_MARK);
   });
 
   // Get generation
   rucar_model.change(function () {
+    _entity_clear_char_opt(ENTITY_CHARACTERISTIC, ENTITY_OPTION);
     _entity_clear(ENTITY_GENERATION, ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_GENERATION, rucar_generation, $(this).val(), ENTITY_MODEL);
   });
 
   // Get serie
   rucar_generation.change(function () {
+    _entity_clear_char_opt(ENTITY_CHARACTERISTIC, ENTITY_OPTION);
     _entity_clear(ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_SERIE, rucar_serie, $(this).val(), ENTITY_GENERATION);
   });
 
   // Get modification
   rucar_serie.change(function () {
+    _entity_clear_char_opt(ENTITY_CHARACTERISTIC, ENTITY_OPTION);
     _entity_clear(ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_MODIFICATION, rucar_modification, $(this).val(), ENTITY_SERIE);
   });
