@@ -1,0 +1,6 @@
+select:hover, option:hover {
+  cursor: pointer;
+}
+p {
+  margin-bottom: 0;
+}

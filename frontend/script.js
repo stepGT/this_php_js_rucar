@@ -6,8 +6,8 @@ $(document).ready(function () {
   let rucar_serie      = $('#this_rucar_serie');
   let rucar_modification   = $('#this_rucar_modification');
   let rucar_equipment      = $('#this_rucar_equipment');
-  let rucar_characteristic = $('#rucar_characteristic');
-  let rucar_option         = $('#rucar_option');
+  let rucar_characteristic = $('.rucar_characteristic');
+  let rucar_option         = $('.rucar_option');
   // Constants
   const ENTITY_MARK           = 'mark';
   const ENTITY_MODEL          = 'model';
@@ -17,6 +17,23 @@ $(document).ready(function () {
   const ENTITY_EQUIPMENT      = 'equipment';
   const ENTITY_CHARACTERISTIC = 'characteristic';
   const ENTITY_OPTION         = 'option';
+
+  /**
+   *
+   * @param selector
+   * @private
+   */
+  let _entity_clear = function (...selector) {
+    /**
+     *
+     */
+    $.each(selector, function (i, el) {
+      let ent_class = $('.form-group-' + el + ' select');
+      ent_class.children().remove();
+      ent_class.attr('disabled', true);
+    });
+  };
+
   /**
    *
    * @param entity
@@ -35,11 +52,6 @@ $(document).ready(function () {
       [ENTITY_EQUIPMENT]: 'комплектацию'
     };
     //
-    if (entity !== ENTITY_MARK) {
-      selector.children().remove();
-      selector.attr('disabled', true);
-    }
-    //
     $.post('/backend/_get_query.php', {
       entity: entity,
       value: value
@@ -49,25 +61,35 @@ $(document).ready(function () {
       //
       switch (entity) {
         case ENTITY_CHARACTERISTIC:
+          $(selector).html('');
           $.each(jsonData, function (key, value) {
             let unit = value.unit ? value.unit : '';
-            html += '<p><b>' + value.name + '</b>: ' + value.value + ' ' + unit + '</p>';
+            html += '<p><small><b>' + value.name + '</b>: ' + value.value + ' ' + unit + '</small></p>';
           });
+          selector.append(html);
+          break;
+        case ENTITY_OPTION:
+          $(selector).html('');
+          $.each(jsonData, function (key, value) {
+            html += '<p><small>' + value.name + '</small></p>';
+          });
+          selector.append(html);
           break;
         case ENTITY_GENERATION:
           $.each(jsonData, function (key, value) {
             let _entity_id = 'id_car_' + entity;
             html += '<option value="' + value[_entity_id] + '">' + value.name + '[' + value.year_begin + ' - ' + value.year_end + ']</option>';
           });
+          selector.attr('disabled', false).append(html);
           break;
         default:
           $.each(jsonData, function (key, value) {
             let _entity_id = 'id_car_' + entity;
             html += '<option value="' + value[_entity_id] + '">' + value.name + '</option>';
           });
+          selector.attr('disabled', false).append(html);
           break;
       }
-      selector.attr('disabled', false).append(html);
     });
   };
 
@@ -76,26 +98,31 @@ $(document).ready(function () {
 
   // Get models
   rucar_mark.change(function () {
+    _entity_clear(ENTITY_MODEL, ENTITY_GENERATION, ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_MODEL, rucar_model, $(this).val(), ENTITY_MARK);
   });
 
   // Get generation
   rucar_model.change(function () {
+    _entity_clear(ENTITY_GENERATION, ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_GENERATION, rucar_generation, $(this).val(), ENTITY_MODEL);
   });
 
   // Get serie
   rucar_generation.change(function () {
+    _entity_clear(ENTITY_SERIE, ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_SERIE, rucar_serie, $(this).val(), ENTITY_GENERATION);
   });
 
   // Get modification
   rucar_serie.change(function () {
+    _entity_clear(ENTITY_MODIFICATION, ENTITY_EQUIPMENT);
     _get_entities(ENTITY_MODIFICATION, rucar_modification, $(this).val(), ENTITY_SERIE);
   });
 
   // Get equipment
   rucar_modification.change(function () {
+    _entity_clear(ENTITY_EQUIPMENT);
     _get_entities(ENTITY_EQUIPMENT, rucar_equipment, $(this).val());
     _get_entities(ENTITY_CHARACTERISTIC, rucar_characteristic, $(this).val());
   });
