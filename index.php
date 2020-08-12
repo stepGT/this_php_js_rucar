@@ -15,44 +15,52 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-3">
             <form>
-                <div class="form-group">
+                <div class="form-group form-group-mark">
                     <label for="this_rucar_mark">Марка</label>
                     <select class="form-control" name="this_rucar_mark"
                             id="this_rucar_mark">
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-model">
                     <label for="this_rucar_model">Модель</label>
                     <select disabled class="form-control" name="this_rucar_model"
                             id="this_rucar_model"></select>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-generation">
                     <label for="this_rucar_generation">Поколение</label>
                     <select disabled class="form-control" name="this_rucar_generation"
                             id="this_rucar_generation"></select>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-serie">
                     <label for="this_rucar_serie">Серия</label>
                     <select disabled class="form-control" name="this_rucar_serie"
                             id="this_rucar_serie"></select>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-modification">
                     <label for="this_rucar_modification">Модификация</label>
                     <select disabled class="form-control" name="this_rucar_modification"
                             id="this_rucar_modification"></select>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-equipment">
                     <label for="this_rucar_equipment">Комплектация</label>
                     <select disabled class="form-control" name="this_rucar_equipment"
                             id="this_rucar_equipment"></select>
                 </div>
             </form>
-            <h3>Значения характеристик:</h3>
-            <div id="rucar_characteristic"></div>
-            <h3>Опции:</h3>
-            <div id="rucar_option"></div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-6">
+                    <h5>Значения характеристик:</h5>
+                    <div class="rucar_characteristic"></div>
+                </div>
+                <div class="col-6">
+                    <h5>Опции:</h5>
+                    <div class="rucar_option"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
